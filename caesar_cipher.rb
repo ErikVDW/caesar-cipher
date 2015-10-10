@@ -24,3 +24,34 @@ end
 def decrypt string, shift
   encrypt string, 26 - shift 
 end
+
+# Just for fun, write a stand-alone unshift method
+def decrypt string, unshift #unshift is positive
+  if unshift > 25
+    raise Exception.new('Unshift should logically be less than 26.')
+  end
+  if unshift < 1
+    raise Exception.new('Unshift must be positive')
+  end
+  if !unshift.is_a?(Integer)
+    raise Exception.new('Are you using a non-integer alphabet?!')
+  end
+  char_arr = string.split('') # char_arr = ['E' ,' ', 'w', 'i', 'r', 'x', 'i', 'r', 'g', 'i','.']
+  char_arr.map do |char|
+    char = char.ord # ASCII numberic
+    if char - unshift >= 97 && char <= 122 ||  char - unshift >= 65 && char <= 90 # Char does not shift out of its alphabet
+      char -= unshift
+    elsif char >= 97 && char <= 122 # Lowercase
+      # Shift the character the remainder over only
+      under = 97 - (char - unshift)
+      char = 123 - under
+    elsif char >= 65 && char <= 90 # Uppercase
+      # Shift the character the remainder over only
+      under = 65 - (char - unshift)
+      char = 91 - under
+    end
+    char = char.chr
+  end.join("")
+#rescue Exception
+  #puts 'Shift should logically be less than 26.'
+end
