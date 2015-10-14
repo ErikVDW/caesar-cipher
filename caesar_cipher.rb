@@ -2,6 +2,12 @@ def encrypt string, shift
   if shift > 25
     raise Exception.new('Shift should logically be less than 26.')
   end
+  if shift < 1
+    raise Exception.new('Unshift must be positive')
+  end
+  if !shift.is_a?(Integer)
+    raise Exception.new('Are you using a non-integer alphabet?!')
+  end
   char_arr = string.split('') # char_arr = ['A' ,' ', 's', 'e', 'n', 't', 'e', 'n', 'c', 'e','.']
   char_arr.map do |char|
     char = char.ord # ASCII numberic
